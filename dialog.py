@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'C:\Users\JoanaH\Documents\dialog.ui'
@@ -8,14 +7,16 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.uic.properties import QtGui
 
 from account import Account
 from utility import is_number
 
 
 class Ui_Dialog(object):
-    account = Account(100, "A123SD")
+    account = Account(100.0, "A123SD")
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -44,9 +45,14 @@ class Ui_Dialog(object):
         self.addMoeny.setObjectName("addMoeny")
         self.addMoeny.clicked.connect(self.change_amount)
 
-        self.totalAmount = QtWidgets.QTextEdit(Dialog)
+        self.totalAmount = QtWidgets.QLabel(Dialog)
         self.totalAmount.setGeometry(QtCore.QRect(300, 260, 151, 41))
         self.totalAmount.setObjectName("totalAmount")
+        self.totalAmount.setText(str(self.account.get_amount()))
+        font = QFont()
+        font.setBold(True)
+        font.setPixelSize(18)
+        self.totalAmount.setFont(font)
 
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(300, 240, 141, 21))
@@ -76,6 +82,8 @@ class Ui_Dialog(object):
         elif is_number(amount):
             print("adding value to account...")
             self.account.set_amount(self.account.get_amount() + float(amount))
-            print("new Value ", self.account.amount)
+
+            print("new Value ", self.account.get_amount())
+            self.totalAmount.setText(str(self.account.amount))
         else:
             print("it is not a number")
