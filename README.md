@@ -1,2 +1,2 @@
 # pyQt
-Creating an interface that will be wuite useless.
+Creating an interface that will be quite useless.
