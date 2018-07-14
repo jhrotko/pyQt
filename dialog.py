@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'C:\Users\JoanaH\Documents\dialog.ui'
@@ -7,11 +8,15 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QPushButton
+
+from account import Account
+from utility import is_number
 
 
 class Ui_Dialog(object):
+    account = Account(100, "A123SD")
+
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(463, 376)
@@ -20,12 +25,15 @@ class Ui_Dialog(object):
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
+
         self.amountEdit = QtWidgets.QPlainTextEdit(Dialog)
         self.amountEdit.setGeometry(QtCore.QRect(20, 50, 104, 41))
         self.amountEdit.setObjectName("amountEdit")
+
         self.Instruction = QtWidgets.QLabel(Dialog)
         self.Instruction.setGeometry(QtCore.QRect(20, 10, 241, 21))
         self.Instruction.setObjectName("Instruction")
+
         self.progressBar = QtWidgets.QProgressBar(Dialog)
         self.progressBar.setGeometry(QtCore.QRect(20, 110, 211, 23))
         self.progressBar.setProperty("value", 24)
@@ -39,9 +47,11 @@ class Ui_Dialog(object):
         self.totalAmount = QtWidgets.QTextEdit(Dialog)
         self.totalAmount.setGeometry(QtCore.QRect(300, 260, 151, 41))
         self.totalAmount.setObjectName("totalAmount")
+
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(300, 240, 141, 21))
         self.label.setObjectName("label")
+
         self.progressText = QtWidgets.QTextEdit(Dialog)
         self.progressText.setGeometry(QtCore.QRect(20, 140, 181, 91))
         self.progressText.setObjectName("progressText")
@@ -49,6 +59,7 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept)
         self.buttonBox.rejected.connect(Dialog.reject)
+
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -58,5 +69,13 @@ class Ui_Dialog(object):
         self.addMoeny.setText(_translate("Dialog", "Add Money"))
         self.label.setText(_translate("Dialog", "Amount in your account"))
 
-    def change_amount(self, amount):
-        print("shdkfj")
+    def change_amount(self):
+        amount = self.amountEdit.toPlainText()
+        if amount is "":
+            print("there is no amount")
+        elif is_number(amount):
+            print("adding value to account...")
+            self.account.set_amount(self.account.get_amount() + float(amount))
+            print("new Value ", self.account.amount)
+        else:
+            print("it is not a number")
